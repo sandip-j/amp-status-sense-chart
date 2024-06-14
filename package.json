@@ -10,7 +10,8 @@
   "license": "ISC",
   "dependencies": {
     "lodash": "^4.17.21",
-    "node-html-parser": "^6.1.13"
+    "node-html-parser": "^6.1.13",
+    "open": "^10.1.0"
   },
   "type": "module"
 }

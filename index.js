@@ -1,7 +1,10 @@
 import _ from "lodash";
 import { parse } from 'node-html-parser';
-import { readFile, readFileSync, writeFileSync } from "fs";
-import path, { join } from "path";
+import { readFileSync, writeFileSync } from "fs";
+import { join } from "path";
+import open from "open";
+
+
 const statusSense = process.argv[2];
 if (!statusSense) {
     throw new Error("Please pass status sense data as parameter like this: node index.js 7f2002200181000000000000010000200064")
@@ -23,7 +26,6 @@ const binData = chunks.map(element => {
 
 const html = parse(readFileSync(join(process.cwd(), "Sheet1.html"), { encoding: "utf-8"}));
 const elements = html.querySelectorAll("table tbody tr").slice(2);
-console.log(binData);
 binData.forEach((d, index) => {
     if ((index >= 5 && index <= 8) || index === 11 || index === 12 || index > 13) {
         return;
@@ -46,7 +48,6 @@ binData.forEach((d, index) => {
     const tds = elements[newIdx].querySelectorAll("td").slice(1);
     d.split("").forEach((bin, idx) => {
         if (bin === "1") {
-            console.log(d, index, newIdx);
             tds[idx].setAttribute("style", "background-color: yellow")
         }
     })
@@ -54,3 +55,4 @@ binData.forEach((d, index) => {
 const writepath = join(process.cwd(), "Sheet2.html");
 writeFileSync(writepath, html.toString(), { encoding: "utf-8"})
 console.log(writepath)
+await open(writepath);
