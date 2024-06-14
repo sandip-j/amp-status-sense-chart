@@ -25,7 +25,7 @@ const html = parse(readFileSync(join(process.cwd(), "Sheet1.html"), { encoding: 
 const elements = html.querySelectorAll("table tbody tr").slice(2);
 console.log(binData);
 binData.forEach((d, index) => {
-    if ((index >= 5 && index <= 8) || index === 11 || index === 12) {
+    if ((index >= 5 && index <= 8) || index === 11 || index === 12 || index > 13) {
         return;
     }
     let newIdx = 0
@@ -33,7 +33,7 @@ binData.forEach((d, index) => {
         if (index === 9) {
             newIdx = 5
         } else if (index === 10) {
-            newIdx === 6;
+            newIdx = 6;
         } else if (index === 13) {
             newIdx = 7
         }
@@ -43,9 +43,11 @@ binData.forEach((d, index) => {
     if (!elements[newIdx]) {
         return;
     }
+    const tds = elements[newIdx].querySelectorAll("td").slice(1);
     d.split("").forEach((bin, idx) => {
         if (bin === "1") {
-            elements[newIdx].querySelectorAll("td").slice(1)[idx].setAttribute("style", "background-color: yellow")
+            console.log(d, index, newIdx);
+            tds[idx].setAttribute("style", "background-color: yellow")
         }
     })
 });
