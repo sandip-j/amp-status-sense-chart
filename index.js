@@ -23,13 +23,29 @@ const binData = chunks.map(element => {
 
 const html = parse(readFileSync(join(process.cwd(), "Sheet1.html"), { encoding: "utf-8"}));
 const elements = html.querySelectorAll("table tbody tr").slice(2);
+console.log(binData);
 binData.forEach((d, index) => {
-    if (!elements[index]) {
+    if ((index >= 5 && index <= 8) || index === 11 || index === 12) {
+        return;
+    }
+    let newIdx = 0
+    if (index > 4) {
+        if (index === 9) {
+            newIdx = 5
+        } else if (index === 10) {
+            newIdx === 6;
+        } else if (index === 13) {
+            newIdx = 7
+        }
+    } else {
+        newIdx = index;
+    }
+    if (!elements[newIdx]) {
         return;
     }
     d.split("").forEach((bin, idx) => {
         if (bin === "1") {
-            elements[index].querySelectorAll("td").slice(1)[idx].setAttribute("style", "background-color: yellow")
+            elements[newIdx].querySelectorAll("td").slice(1)[idx].setAttribute("style", "background-color: yellow")
         }
     })
 });
